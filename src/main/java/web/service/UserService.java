@@ -1,4 +1,6 @@
 package web.service;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import web.models.User;
 import java.util.List;
 
