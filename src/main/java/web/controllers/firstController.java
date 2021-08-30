@@ -10,18 +10,11 @@ import web.service.UserService;
 @RequestMapping("/users")
 public class firstController {
 
+    @Autowired
+    private UserService userService;
 
-    private final UserService userService;
 
-    public firstController(UserService userService) {
-        this.userService = userService;
-        userService.add(new User(1, "Anton", "Shirshov", 24));
-        userService.add(new User(2, "Oleg", "Olegov", 25));
-        userService.add(new User(3, "Vadim", "Vadimov", 26));
-        userService.add(new User(4, "Vlad", "Vladov", 27));
-    }
-
-    @GetMapping("/users")
+    @GetMapping()
     public String printUsers(Model model) {
         model.addAttribute("users", userService.listUsers());
         return "/index";
@@ -36,11 +29,12 @@ public class firstController {
     @PostMapping()
     public String create(@ModelAttribute("user") User user) {
         userService.add(user);
-        return "redirect:/index";
+        return "redirect:/users";
     }
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
+        //model.addAttribute("");
         return "/new";
     }
 
@@ -53,12 +47,12 @@ public class firstController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") User user, @PathVariable("id") int id) {
         userService.update(id, user);
-        return "redirect:/index";
+        return "redirect:/users";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         userService.delete(id);
-        return "redirect:/index";
+        return "redirect:/users";
     }
 }
